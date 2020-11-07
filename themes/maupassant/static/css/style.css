@@ -369,7 +369,7 @@ textarea {
 }
 .post-content h3,.post-content h2{
     margin: 1.4em 0 1.1em;
-    border-bottom: 1px solid #eee;
+    /* border-bottom: 1px solid #eee; */
     overflow: hidden;
 }
 .post-content pre{
@@ -1040,7 +1040,7 @@ table tr:nth-child(2n) {
 
 table tr {
     border: 0;
-    border-top: 1px solid #CCC;
+    /* border-top: 1px solid #CCC; */
     background-color: white;
 }
   

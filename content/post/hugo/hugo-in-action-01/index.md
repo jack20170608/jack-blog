@@ -1,5 +1,5 @@
 ---
-title: "用Hugo, Docker和Nginx搭建自己的静态博客(一)"
+title: "用Hugo、Nginx、Docker搭建静态博客(一) 安装与简介"
 categories: ["Hugo"]
 tags: ["hugo","Docker", "Nginx","静态博客"]
 draft: false
@@ -156,7 +156,6 @@ draft: false
 hahahaha
 
 ```
-
 
 ### hugo 的目录结构
 我们执行hugo new site xxx 命令的时候，hugo就会自动帮我们生成以下的目录结构，其中config.toml是核心的配置文件。
