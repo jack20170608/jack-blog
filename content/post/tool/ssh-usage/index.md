@@ -46,7 +46,7 @@ RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Ad
 **Step1** : 在需要免密登陆的主机（主机A）下生成公钥和私钥
 
 ```bash 
-# ssh-keygen -t rsa     ##-t rsa可以省略，默认就是生成rsa类型的密钥
+$> ssh-keygen -t rsa     ##-t rsa可以省略，默认就是生成rsa类型的密钥
 ```
 
 说明：命令执行后会有提示，输入三次回车即可，执行完成后会在当前用户的.ssh目录下生成两个文件：id_rsa、id_rsa.pub文件，前者时私钥文件，后者是公钥文件（拷贝到其他主机只需要拷贝这个文件的内容）。
@@ -59,7 +59,7 @@ RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Ad
 使用 ssh-copy-id 进行拷贝公钥非常方便，只需要指定目标主机和目标主机的用户即可。
 
 ```shell
-# ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.187.142
+$> ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.187.142
 ```
 
 执行这条命令后会自动将登录主机的公钥文件内容追加至目标主机中指定用户（root）.ssh目录下的authorized_keys文件中。这个过程是全自动的，非常方便。
@@ -67,17 +67,17 @@ RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Ad
 自己创建文件进行拷贝
 1) 在登录主机（客户机）上创建authorized_keys文件并将公钥追加到该文件。
 ```bash 
-# cat id_rsa.pub >> authorized_keys
-# chmod 600 authorized_keys     ##修改文件权限为600，该文件有规定如果属组其他人出现可写则文件就不会生效
+$> cat id_rsa.pub >> authorized_keys
+$> chmod 600 authorized_keys     ##修改文件权限为600，该文件有规定如果属组其他人出现可写则文件就不会生效
 ```
 2) 在被登录机的指定用户家目录下创建 .ssh 目录（这里在root用户下创建，因为要使用密钥登陆到root用户）
 ```bash
-# mkdir .ssh
-# chmod 700 .ssh     ##将目录权限改为700该目录的权限必须是700才有效
+$> mkdir .ssh
+$> chmod 700 .ssh     ##将目录权限改为700该目录的权限必须是700才有效
 ```   
 3) 将登录机创建的authorized_keys文件拷贝到被登录机，使用scp
 ```bash
-# scp authorized_keys root@192.168.187.142:/root/.ssh/
+$> scp authorized_keys root@192.168.187.142:/root/.ssh/
 authorized_keys  
 ```
 几点注意： 
@@ -91,7 +91,7 @@ authorized_keys文件权限必须为600，该文件有规定如果属组其他�
 ### 4. 登录
 使用主机A乙root用户身份登陆到主机B
 ```bash 
-1 # ssh root@192.168.187.142
+1 $> ssh root@192.168.187.142
 2 Last login: Wed Feb 13 15:24:30 2019 from 192.168.187.137
 ```
 首次登录将弹出保存信息，输入yes即可，此时已经实现了免密的密钥登陆。
