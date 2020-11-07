@@ -180,7 +180,7 @@ Commercial support is available at
 [jack@jack-blog]$
 ```
 
-## 5.3 挂载Nginx镜像
+### 5.3 挂载Nginx镜像
 
 Nginx 镜像配置信息在容器中的位置如下： 
 
@@ -301,6 +301,6 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 ### 5.5 访问blog，验证是否启动成功。
 ![](blog-main.PNG)
 
-### 参考
+## 参考
 
 [Nginx 容器教程](http://www.ruanyifeng.com/blog/2018/02/nginx-docker.html)

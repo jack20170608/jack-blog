@@ -1,9 +1,10 @@
 ---
 title: "搞定SSH免密登录"
 categories: ["常用工具","SSH"]
+tags: ["SSH","Linux"]
 date: 2020-10-31T22:49:57+08:00
 draft: false
-toc: false
+toc: true
 ---
 
 ## 1. SSH 密钥登陆原理
@@ -34,7 +35,7 @@ RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Ad
 
 如果公钥加密的信息只有私钥解得开，那么只要私钥不泄漏，通信就是安全的。
 
-### 2. SSH 的两种登录方式
+## 2. SSH 的两种登录方式
 - 用户名+ 密码 
 ![username + password](ssh-loginWithPassword.PNG)
 - 密钥验证登录
@@ -42,7 +43,7 @@ RSA是1977年由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Ad
 
 从这里可以看出，若使用免密登录，必须把client的公钥分发到server的公钥列表中，也就是```~/.ssh/authorized_keys```文件中。
 
-### 3. SSH 免密登录处理步骤
+## 3. SSH 免密登录处理步骤
 **Step1** : 在需要免密登陆的主机（主机A）下生成公钥和私钥
 
 ```bash 
@@ -88,7 +89,7 @@ Linux 不同的用户下都有自己的.ssh 文件夹，用来保存当前用户
 
 authorized_keys文件权限必须为600，该文件有规定如果属组其他人出现可写则文件就不会生效
 
-### 4. 登录
+## 4. 登录测试
 使用主机A乙root用户身份登陆到主机B
 ```bash 
 1 $> ssh root@192.168.187.142
@@ -126,7 +127,7 @@ ssh -i ~/.ssh/id_rsa root@192.168.10.2
 scp -i ~/.ssh/id_rsa root@192.168.10.2:/xxx
 ```
 
-### 5. 客户端配置
+## 5. 客户端配置
 有时候客户端 ssh配置较多，例如要配置端口(非默认22)，使用代理proxy, 使用指定的密钥，为了使连接更简单，使用config文件可以很好的解决这个问题。
 
 config文件配置十分简单，只需要按照以下格式配置即可。
@@ -159,7 +160,7 @@ ssh prod
 
 注意本地config的权限也应该设置为600。
 
-### 6. 参考链接
+## 6. 参考链接
 
 + [百度百科](https://baike.baidu.com/item/RSA%E7%AE%97%E6%B3%95/263310?fromtitle=RSA&fromid=210678&fr=aladdin)
 + [RSA算法原理](http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html)
