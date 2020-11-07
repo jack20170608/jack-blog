@@ -299,4 +299,8 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 ```
 
 ### 5.5 访问blog，验证是否启动成功。
+![](blog-main.PNG)
 
+### 参考
+
+[Nginx 容器教程](http://www.ruanyifeng.com/blog/2018/02/nginx-docker.html)
