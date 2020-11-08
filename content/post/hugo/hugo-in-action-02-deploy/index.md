@@ -307,7 +307,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 ```html
  <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
 ```
-根据hugo的目录结构，于是把favicon.icon放在在```jack-blog/static/``目录下，重新生成即可。
+根据hugo的目录结构，于是把favicon.icon放在在```jack-blog/static/```目录下，重新生成即可。
 
 这里推荐一个在线格式转换的网站，可以在线把svg格式的图片转成ico。 [svg-to-ico](https://www.aconvert.com/cn/icon/svg-to-ico/)
 
