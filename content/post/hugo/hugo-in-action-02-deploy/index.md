@@ -301,6 +301,17 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 ### 5.5 访问blog，验证是否启动成功。
 ![](blog-main.PNG)
 
+## 6. 搞定博客的icon
+一般情况下，不同的hugo主题的icon 的设置可能不一样，支持的icon图片格式(ico、svg等等)，文件位置可能不一样。这时只用检查public文件夹下的```index.html```，看icon指向的文件的位置。
+例如笔者当前的主题并没有icon相关的设置，于是查看文件发现了这行，文件名根目录下的favicon.ico。
+```html
+ <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+```
+根据hugo的目录结构，于是把favicon.icon放在在```jack-blog/static/``目录下，重新生成即可。
+
+这里推荐一个在线格式转换的网站，可以在线把svg格式的图片转成ico。 [svg-to-ico](https://www.aconvert.com/cn/icon/svg-to-ico/)
+
+
 ## 参考
 
 [Nginx 容器教程](http://www.ruanyifeng.com/blog/2018/02/nginx-docker.html)
