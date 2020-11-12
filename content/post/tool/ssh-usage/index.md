@@ -1,7 +1,7 @@
 ---
 title: "搞定SSH免密登录"
-categories: ["常用工具","SSH"]
-tags: ["SSH","Linux"]
+categories: ["常用工具"]
+tags: ["SSH","Linux","常用工具"]
 date: 2020-10-31T22:49:57+08:00
 draft: false
 toc: true

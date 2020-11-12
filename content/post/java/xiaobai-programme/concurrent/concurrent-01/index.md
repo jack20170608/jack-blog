@@ -16,3 +16,7 @@ toc: true
 ## 线程与进程的区别
 
 ## Java线程
+
+## 参考资料
+
+1. [synchronized内存可见性理解](https://www.cnblogs.com/hupu-jr/p/8397911.html)
