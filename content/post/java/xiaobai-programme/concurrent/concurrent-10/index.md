@@ -1,5 +1,5 @@
 ---
-title: "小白学编程之并发(十) 开发案例-Monitor"
+title: "小白学编程之并发(十) 开发案例-Monitor-1"
 categories: ["Java","小白学编程"]
 tags: ["Java","并发编程","编程小白"]
 date: 2020-11-11T17:24:42+08:00
@@ -188,7 +188,7 @@ public class MonitorImplV1 {
 
 ## 4. Monitor 2.0 版
 
-小A吸取了上次的教训，把单元测试看的很重，2.0版还包括了一个很Nice的单元测试。
+&emsp;&emsp;小A吸取了上次的教训，把单元测试看的很重，2.0版还包括了一个很Nice的单元测试。
 
 ```java
 package org.jack.monitor.impl;
@@ -210,9 +210,7 @@ public class MonitorImplV2 {
             this.key = key;
             this.desc = desc;
         }
-
         private String key;
-
         private String desc;
 
         @Override
@@ -223,7 +221,6 @@ public class MonitorImplV2 {
             return Objects.equal(key, that.key) &&
                     Objects.equal(desc, that.desc);
         }
-
         @Override
         public int hashCode() {
             return Objects.hashCode(key, desc);
@@ -234,13 +231,12 @@ public class MonitorImplV2 {
         AtomicInteger count = new AtomicInteger(0);
         float avgTime;
         AtomicLong totalTime = new AtomicLong(0);
-
         @Override
         public String toString() {
             return new StringJoiner(", ", MonitorValue.class.getSimpleName() + "[", "]")
-                    .add("count=" + count)
+                    .add("count=" + count.get())
                     .add("avgTime=" + avgTime)
-                    .add("totalTime=" + totalTime)
+                    .add("totalTime=" + totalTime.get())
                     .toString();
         }
     }
@@ -280,7 +276,6 @@ import com.google.common.base.Stopwatch;
 import org.jack.monitor.impl.*;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -351,7 +346,7 @@ Test Pass!!!
 ```
 此时，B丢了。
 
-小Y告诉小A，重现这个问题其实也很简单，在判空的if里面人为放个陷阱来模拟CPU内部的某种延迟(因为CPU的延迟我们无法预知)，代码修改如下：
+&emsp;&emsp;小Y告诉小A，重现这个问题其实也很简单，在判空的if里面人为放个陷阱来模拟CPU内部的某种延迟(因为CPU的延迟我们无法预知)，代码修改如下：
 ```Java
         MonitorValue value = monitors.get(key);
         if (null == value) {
@@ -366,7 +361,7 @@ Test Pass!!!
              System.out.println(Thread.currentThread().getName());
         }
 ```
-重新运行单元测试，发现单元测试过不了,有一些数据都丢掉了。小A这下明白了，然后小Y说最直接的解决办法就是在visit方法上加synchronized关键字，简单粗暴、当然不适应于性能要求非常苛刻的场景。
+&emsp;&emsp;重新运行单元测试，发现单元测试过不了,有一些数据都丢掉了。小A这下明白了，然后小Y说最直接的解决办法就是在visit方法上加synchronized关键字，简单粗暴、当然不适应于性能要求非常苛刻的场景。
 
 ```text 
 org.junit.ComparisonFailure: 
@@ -374,4 +369,146 @@ Expected :MonitorValue[count=1000, avgTime=10.0, totalTime=10000]
 Actual   :MonitorValue[count=819, avgTime=10.0, totalTime=8190]
 ```
 
-于是小A，很快的发布了3.0版，终于解决了这个问题。小A一直在思考小Y说的话，如果是性能要求很高的情况下该怎么做呢？
+## 5. Monitor 3.0版
+&emsp;&emsp;于是小A，很快的发布了3.0版，单元测试也通过了，看起来这个问题得到很好的解决了。于是他把这个代码发给了小Y，让他给看看是否OK？
+
+```java
+import com.google.common.base.Objects;
+import java.util.Map;
+import java.util.StringJoiner;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
+public class MonitorImplV3 {
+    public static class MonitorKey {
+        public MonitorKey(String key, String desc) {
+            this.key = key;
+            this.desc = desc;
+        }
+        private String key;
+        private String desc;
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            MonitorKey that = (MonitorKey) o;
+            return Objects.equal(key, that.key) &&
+                    Objects.equal(desc, that.desc);
+        }
+        @Override
+        public int hashCode() {
+            return Objects.hashCode(key, desc);
+        }
+    }
+
+    public static class MonitorValue {
+        AtomicInteger count = new AtomicInteger(0);
+        double avgTime;
+        AtomicLong totalTime = new AtomicLong(0);
+        public AtomicInteger getCount() {
+            return count;
+        }
+        public double getAvgTime() {
+            return avgTime;
+        }
+        public AtomicLong getTotalTime() {
+            return totalTime;
+        }
+        @Override
+        public String toString() {
+            return new StringJoiner(", ", MonitorValue.class.getSimpleName() + "[", "]")
+                    .add("count=" + count.get())
+                    .add("avgTime=" + avgTime)
+                    .add("totalTime=" + totalTime.get())
+                    .toString();
+        }
+    }
+    public synchronized void visit(String url, String desc, long timeCost) {
+        MonitorKey key = new MonitorKey(url, desc);
+        MonitorValue value = monitors.get(key);
+        if (null == value) {
+            value = new MonitorValue();
+            //mock some internal delay
+            try {
+                Thread.sleep(100L);
+            } catch (Exception ignore) {
+            }
+            monitors.put(key, value);
+            System.out.println(Thread.currentThread().getName() + " lucky guy....");
+        } else {
+            System.out.println(Thread.currentThread().getName());
+        }
+        value.count.getAndIncrement();
+        value.totalTime.getAndAdd(timeCost);
+        value.avgTime = (double) value.totalTime.get() / value.count.get();
+    }
+    public Map<MonitorKey, MonitorValue> getMonitors() {
+        return monitors;
+    }
+    private Map<MonitorKey, MonitorValue> monitors = new ConcurrentHashMap<>();
+}
+```
+
+&emsp;&emsp;小Y看了看最新的代码说基本可以满足了需求。但是有两个小小的concern，对象的更新已经实现了串行化，更新不会丢失了，一致性得到了保证。但是由于MonitorValue中存在多个属性，如果对象的使用者(或者叫读者)在读的时候存在时间差，例如先读取了count，一段时间之后读totalTime，这段时间内totalTime发生了更新，这样看起来MonitorValue好像存在不一致性，例如以下的测试代码。
+
+```java
+    @Test
+    public void testMonitorV3Extra() throws Throwable {
+        MonitorImplV3 monitorV3 = new MonitorImplV3();
+        Thread[] threads = new Thread[THREAD_NUM_3000];
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        for (int i = 0; i < THREAD_NUM_3000; i++) {
+            Thread t = new Thread(() -> monitorV3.visit(API.get(0), null, 10L));
+            threads[i] = t;
+            t.start();
+        }
+        //print the avgCost every 100ms
+        Thread monitorThread = new Thread(() -> {
+            int j = 100;
+            while (j-- > 0) {
+                monitorV3.getMonitors().values().forEach(v -> {
+                    System.out.print(v.getCount());
+                    try {
+                        Thread.sleep(2L);
+                    } catch (Throwable ignore) {}
+                    System.out.println(" vs " + v.getTotalTime());
+                });
+            }
+        });
+        monitorThread.start();
+
+        //Wait the thread finish
+        for (Thread thread : threads) {
+            thread.join();
+        }
+        System.out.println("TimeCost: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+        stopwatch.stop();
+        monitorThread.join();
+        Assert.assertEquals(1, monitorV3.getMonitors().size());
+        System.out.println("-----------------------------------------------------------");
+        monitorV3.getMonitors().values().forEach(v -> System.out.println(v.toString()));
+        monitorV3.getMonitors().values().forEach(v -> {
+            Assert.assertEquals("MonitorValue[count=3000, avgTime=10.0, totalTime=30000]", v.toString());
+        });
+    }
+```
+运行结果很容易会发现类似如下的结果，count=2987， 而totalTime却比29870大，但是最终结果是正确的。
+```text
+2987 vs 29900
+2990 vs 29960
+2997 vs 30000
+TimeCost: 1519ms
+3000 vs 30000
+3000 vs 30000
+3000 vs 30000
+3000 vs 30000
+3000 vs 30000
+3000 vs 30000
+3000 vs 30000
+....
+-----------------------------------------------------------
+MonitorValue[count=3000, avgTime=10.0, totalTime=30000]
+```
+
+&emsp;&emsp; 怎么解决这个问题呢？ 今天还是先在这儿吧，下一篇再慢慢把故事说完，顺便笔者也问大家一个问题：在3.0版本中在visit方法添加了synchronized，那就没必要在MonitorValue中使用原子类了，对么？
