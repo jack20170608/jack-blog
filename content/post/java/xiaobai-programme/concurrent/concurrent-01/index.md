@@ -20,3 +20,4 @@ toc: true
 ## 参考资料
 
 1. [synchronized内存可见性理解](https://www.cnblogs.com/hupu-jr/p/8397911.html)
+2. [Java多线程进阶](https://segmentfault.com/a/1190000015815012?utm_source=sf-related)
