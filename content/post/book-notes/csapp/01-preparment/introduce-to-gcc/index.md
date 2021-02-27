@@ -160,6 +160,7 @@ h1  h2  h3  h4  HelloWorld.c  HelloWorld.i  HelloWorld.o  HelloWorld.s
 | -o       |                                     | 指定输出文件名，可以配合以上三种标签使用, 参数经常可以省略，省略后会以默认名称输出。 |
 | 无标签   | gcc HelloWorld.c -o hello           | 生成名为a.out的可执行文件                                                            |
 | -g       | gcc -g HelloWorld.c -o hello        | 生成可执行文件并添加调试信息                                                         |
+| -v       | gcc -v HelloWorld.c                 | 打印编译的详细过程 |
 
 
 

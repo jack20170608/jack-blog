@@ -1,6 +1,6 @@
-baseURL = "/"
+baseURL = "https://www.flysnow.org"
 languageCode = "zh-CN"
-title = "jack007的博客"
+title = "飞雪无情的博客"
 theme = "maupassant"
 googleAnalytics = ""  # UA-XXXXXXXX-X
 
@@ -15,28 +15,25 @@ summaryLength = 140
 disqusShortname = "yourdiscussshortname"  ## 是否开启disqus评论，不要和utteranc同时开启
 
 [author]
-  name = "jack007"
+  name = "飞雪无情"
 
 [params]
-  author = "jack007"
-  subtitle = "专注于Java、Go语言(golang)、操作系统、计算机网络、项目管理、金融行业软件架构"
-  keywords = "golang,go语言,go语言笔记,jack007,java,操作系统,博客,项目管理,金融IT,软件架构,公众号,小程序"
-  description = "专注于IT互联网，包括但不限于Go语言(golang)、Java、Python、项目管理、软件架构等"
+  author = "飞雪无情"
+  subtitle = "专注于Android、Java、Go语言(golang)、移动互联网、项目管理、软件架构"
+  keywords = "golang,go语言,go语言笔记,飞雪无情,java,android,博客,项目管理,python,软件架构,公众号,小程序"
+  description = "专注于IT互联网，包括但不限于Go语言(golang)、Java、Android、Python、项目管理、抖音分析、软件架构等"
   busuanzi = true #启用不算子网页统计
   googleAd = ""  #ca-pub-xxxxxxxxxxxxxx
   localSearch = true # 启用本地搜索
 
   # 这里我存放在了主题的static文件夹里，根目录的似乎也可以
-  # customCSS = ['douban.css', 'other.css']
+  customCSS = ['douban.css', 'other.css']
   # if ['custom.css'], load '/static/css/custom.css' file
-  # customJS = ['douban.js']
+  customJS = ['douban.js']
   # if ['custom.js'], load '/static/js/custom.js' file
 
   # 全局开关，你也可以在每一篇内容的 front matter 中针对单篇内容关闭或开启某些功能
   toc = true  # 是否开启目录
-
-  ## 添加备案
-  beian = "粤ICP备XXXXXXXX号-1"
 
 ## 友情链接，可以多个
 
@@ -46,9 +43,9 @@ disqusShortname = "yourdiscussshortname"  ## 是否开启disqus评论，不要�
   url = "https://www.flysnow.org/"
 
 [[params.links]]
-  title = "百度"
-  name = "百度链接"
-  url = "http://www.baidu.com"
+  title = "Android Gradle权威指南"
+  name = "Android Gradle权威指南"
+  url = "http://yuedu.baidu.com/ebook/14a722970740be1e640e9a3e"
 
 ## 侧边栏广告位
 [[params.ads]]
