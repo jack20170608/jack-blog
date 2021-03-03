@@ -15,11 +15,10 @@ toc: true
 
 例如： [Ipchaxun](https://ipchaxun.com/)
 
-可以看到解析出来的地址如下：
-![](ip-chaxun.PNG)
+可以看到解析出来的址。
 
 2. 修改windows的host配置文件，win10配置文件的位置在`C:\Windows\System32\drivers\etc`，其他windows版本位置应该类似。
-![](host-file.PNG)
+
 使用文本工具编辑`host`文件，添加以下内容。
 ```
 52.74.223.119 github.com
@@ -27,7 +26,7 @@ toc: true
 13.250.177.223 github.com
 ```
 
-![](host-file-update.PNG)
+
 
 3. 修改完成后，刷新DNS缓存,使用CMD打开命令行窗口，输入以下命令
 ```bash
@@ -35,7 +34,14 @@ ipconfig /flushdns
 ```
 
 4. 重新启动浏览器，即可正常访问github了。
+
+
+
+操作截图如下: 
+![](ip-chaxun.PNG)
+
+![](host-file.PNG)
+
+![](host-file-update.PNG)
+
 ![](flush-dns.PNG)
-
-
-
