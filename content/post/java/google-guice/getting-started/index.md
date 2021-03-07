@@ -217,4 +217,4 @@ public class GuiceDemo {
 &nbsp;&nbsp; `GuiceDemo`应用使用Guice创建了一个很小的对象依赖关系图，并用来创建Greeter实例。大型应用程序通常通过很多的`Module`对象来管理复杂的对象依赖关系。
 
 ## 下一章节
-&nbsp;&nbsp;了解更多关于Guice的核心设计理念。
+&nbsp;&nbsp;了解更多关于Guice的[核心设计](../mental-model/index.md)理念。
